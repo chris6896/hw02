@@ -13,8 +13,22 @@ class CalculatorApp extends StatelessWidget {
   }
 }
 
-class CalculatorHome extends StatelessWidget {
+class CalculatorHome extends StatefulWidget {
   @override
+  _CalculatorHomeState createState() => _CalculatorHomeState();
+}
+
+class _CalculatorHomeState extends State<CalculatorHome> {
+  String output = "0"; // Initial display
+
+  // Function to handle button press
+  void buttonPressed(String buttonText) {
+    setState(() {
+      output += buttonText;
+    });
+  }
+
+  // Function to build the button UI
   Widget buildButton(String buttonText) {
     return Expanded(
       child: TextButton(
@@ -25,14 +39,13 @@ class CalculatorHome extends StatelessWidget {
           buttonText,
           style: TextStyle(fontSize: 20.0),
         ),
-        onPressed: () {},
+        onPressed: () => buttonPressed(buttonText), // Corrected onPressed
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: Text("Calculator"),
@@ -43,17 +56,17 @@ class CalculatorHome extends StatelessWidget {
             alignment: Alignment.centerRight,
             padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 12.0),
             child: Text(
-              '0',
+              output, // Dynamically display the current output
               style: TextStyle(
                 fontSize: 48.0,
-                fontWeight: FontWeight.bold,                
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
           Column(
             children: [
               Row(
-                children: [ 
+                children: [
                   buildButton("7"),
                   buildButton("8"),
                   buildButton("9"),
