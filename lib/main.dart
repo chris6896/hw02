@@ -57,6 +57,7 @@ class CalculatorHome extends StatelessWidget {
                   buildButton("7"),
                   buildButton("8"),
                   buildButton("9"),
+                  buildButton("/"),
                 ],
               ),
               Row(
@@ -64,6 +65,7 @@ class CalculatorHome extends StatelessWidget {
                   buildButton("4"),
                   buildButton("5"),
                   buildButton("6"),
+                  buildButton("*"),
                 ],
               ),
               Row(
@@ -71,11 +73,13 @@ class CalculatorHome extends StatelessWidget {
                   buildButton("1"),
                   buildButton("2"),
                   buildButton("3"),
+                  buildButton("-"),
                 ],
               ),
               Row(
                 children: [
-                  buildButton("0")
+                  buildButton("0"),
+                  buildButton("+"),
                 ],
               ),
             ],
