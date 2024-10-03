@@ -7,7 +7,7 @@ class CalculatorApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Calculator App',
+      title: 'Calculator',
       home: CalculatorHome(),
     );
   }
@@ -19,16 +19,58 @@ class CalculatorHome extends StatefulWidget {
 }
 
 class _CalculatorHomeState extends State<CalculatorHome> {
-  String output = "0"; // Initial display
+  String output = "0"; 
+  String _output = "0";
+  double num1 = 0;
+  double num2 = 0;
+  String operator = "";
 
-  // Function to handle button press
   void buttonPressed(String buttonText) {
+    if (buttonText == "CLEAR") {
+      _output = "0";
+      num1 = 0;
+      num2 = 0;
+      operator = "";
+    } else if (buttonText == "+" || buttonText == "-" || buttonText == "*" || buttonText == "/") {
+      num1 = double.parse(output); 
+      operator = buttonText;
+      _output = "0"; 
+    } else if (buttonText == "=") {
+      num2 = double.parse(output); 
+      switch (operator) {
+        case "+":
+          _output = (num1 + num2).toString();
+          break;
+        case "-":
+          _output = (num1 - num2).toString();
+          break;
+        case "*":
+          _output = (num1 * num2).toString();
+          break;
+        case "/":
+          if (num2 != 0) {
+            _output = (num1 / num2).toString();
+          } else {
+            _output = "ERROR"; 
+          }
+          break;
+        default:
+          _output = "0";
+      }
+
+      num1 = 0;
+      num2 = 0;
+      operator = "";
+    } else {
+      _output += buttonText;
+    }
+
     setState(() {
-      output += buttonText;
+      output = double.parse(_output).toString();
     });
   }
 
-  // Function to build the button UI
+
   Widget buildButton(String buttonText) {
     return Expanded(
       child: TextButton(
@@ -39,7 +81,7 @@ class _CalculatorHomeState extends State<CalculatorHome> {
           buttonText,
           style: TextStyle(fontSize: 20.0),
         ),
-        onPressed: () => buttonPressed(buttonText), // Corrected onPressed
+        onPressed: () => buttonPressed(buttonText),
       ),
     );
   }
@@ -56,7 +98,7 @@ class _CalculatorHomeState extends State<CalculatorHome> {
             alignment: Alignment.centerRight,
             padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 12.0),
             child: Text(
-              output, // Dynamically display the current output
+              output, 
               style: TextStyle(
                 fontSize: 48.0,
                 fontWeight: FontWeight.bold,
@@ -93,6 +135,8 @@ class _CalculatorHomeState extends State<CalculatorHome> {
                 children: [
                   buildButton("0"),
                   buildButton("+"),
+                  buildButton("CLEAR"),
+                  buildButton("="),
                 ],
               ),
             ],
